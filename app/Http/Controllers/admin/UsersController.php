@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\User;
-use Exception;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use App\Models\User;
 
 class UsersController extends Controller
 {

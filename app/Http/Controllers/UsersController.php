@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use Exception;
-use Hash;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Spatie\Permission\Models\Role;
+use App\Models\User;
 
 class UsersController extends Controller
 {

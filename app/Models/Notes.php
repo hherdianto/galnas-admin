@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * App\Models\Notes
@@ -34,6 +35,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Notes extends Model
 {
+
+    use HasFactory;
+
     protected $table = 'notes';
 
     /**
@@ -41,7 +45,7 @@ class Notes extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\User', 'users_id')->withTrashed();
+        return $this->belongsTo('App\Models\User', 'users_id')->withTrashed();
     }
 
     /**

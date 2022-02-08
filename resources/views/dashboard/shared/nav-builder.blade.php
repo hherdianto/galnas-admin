@@ -20,7 +20,7 @@ if (!function_exists('renderDropdown')) {
             for ($i = 0; $i < count($data); $i++) {
                 if ($data[$i]['slug'] === 'link') {
                     echo '<li class="c-sidebar-nav-item">';
-                    echo '<a class="c-sidebar-nav-link" href="' . env('APP_URL', '') . $data[$i]['href'] . '">';
+                    echo '<a class="c-sidebar-nav-link" href="' . url($data[$i]['href']) . '">';
                     echo '<span class="c-sidebar-nav-icon"></span>' . $data[$i]['name'] . '</a></li>';
                 } elseif ($data[$i]['slug'] === 'dropdown') {
                     renderDropdown($data[$i]);

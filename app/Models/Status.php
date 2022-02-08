@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * App\Models\Status
@@ -22,6 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Status extends Model
 {
+    use HasFactory;
+
     protected $table = 'status';
     public $timestamps = false; 
     /**
