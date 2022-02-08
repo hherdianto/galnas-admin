@@ -25,6 +25,8 @@ class GetMenu
             $role = 'guest';
             //$role =  Auth::user()->menuroles;
             $userRoles = Auth::user()->getRoleNames();
+            logger(\auth()->user());
+            logger($userRoles);
             //$userRoles = $userRoles['items'];
             $roleHierarchy = RoleHierarchy::select('role_hierarchy.role_id', 'roles.name')
             ->join('roles', 'roles.id', '=', 'role_hierarchy.role_id')

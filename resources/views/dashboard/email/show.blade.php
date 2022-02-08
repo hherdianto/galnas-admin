@@ -16,10 +16,12 @@
                         <h4>Subject</h4>
                         <p>{{ $template->subject }}</p>
                         <h4>Content</h4>
+{{--                        <iframe>{!! $template->content !!}</iframe>--}}
                         <p>{{ $template->content }}</p>
 
 
-                        <a href="{{ route('mail.index') }}" class="btn btn-primary">Return</a> 
+                        <a href="{{ route('mail.index') }}" class="btn btn-primary">Return</a>
+                        <a href="{{ url('mailTemplate') . '/' . $template->id}}" target="_blank" class="btn btn-primary">tt</a>
                     </div>
                 </div>
             </div>

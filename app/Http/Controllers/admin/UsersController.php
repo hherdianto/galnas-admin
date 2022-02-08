@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\User;
+use Exception;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 
 class UsersController extends Controller
 {
@@ -21,7 +23,7 @@ class UsersController extends Controller
     /**
      * Show the users list.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function index()
     {
@@ -32,9 +34,10 @@ class UsersController extends Controller
 
     /**
      *  Remove user
-     * 
-     *  @param int $id 
-     * @return \Illuminate\Contracts\Support\Renderable
+     *
+     * @param int $id
+     * @return Renderable | RedirectResponse
+     * @throws Exception
      */
     public function remove( $id )
     {
@@ -47,9 +50,9 @@ class UsersController extends Controller
 
     /**
      *  Show the form for editing the user.
-     * 
+     *
      *  @param int $id
-     *  @return \Illuminate\Contracts\Support\Renderable
+     *  @return Renderable
      */
     public function editForm( $id )
     {

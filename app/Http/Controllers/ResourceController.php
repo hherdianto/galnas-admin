@@ -2,34 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Models;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Response;
+use DB;
 use App\Services\ResourceService;
 use App\Services\FormService;
 use App\Models\Form;
 use App\Models\FormField;
-use Illuminate\Support\Facades\Auth;
+use Auth;
+use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Throwable;
 
 class ResourceController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param $table
+     * @param Request $request
+     * @return Response | View
      */
     public function index($table, Request $request)
     {
+        $guestHasPermission = false;
         $role = Role::where('name', '=', 'guest')->first();
         try {
             if($role->hasPermissionTo('browse bread ' . $table)){
                 $guestHasPermission = true;
             }
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $guestHasPermission = false;
-        }       
+        }
         if(!$guestHasPermission){
             if(empty(Auth::user())){
                 abort('401');
@@ -55,18 +62,21 @@ class ResourceController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param $table
+     * @param Request $request
+     * @return Response | View
      */
     public function create($table, Request $request)
     {
+        $guestHasPermission = false;
         $role = Role::where('name', '=', 'guest')->first();
         try {
             if($role->hasPermissionTo('add bread ' . $table)){
                 $guestHasPermission = true;
             }
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $guestHasPermission = false;
-        }       
+        }
         if(!$guestHasPermission){
             if(empty(Auth::user())){
                 abort('401');
@@ -75,13 +85,13 @@ class ResourceController extends Controller
                     abort('401');
                 }
             }
-        }        
+        }
         $form = Form::find( $table );
         if($form->add == 1){
             $resourceService = new ResourceService();
             $formService = new FormService();
             $columns = $resourceService->getColumnsForAdd( $table );
-            
+
             return view('dashboard.resource.create', [
                 'form' => $form,
                 'columns' => $columns,
@@ -96,19 +106,21 @@ class ResourceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param $table
+     * @param Request $request
+     * @return Response | RedirectResponse
      */
     public function store($table, Request $request)
     {
+        $guestHasPermission = false;
         $role = Role::where('name', '=', 'guest')->first();
         try {
             if($role->hasPermissionTo('add bread ' . $table)){
                 $guestHasPermission = true;
             }
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $guestHasPermission = false;
-        }       
+        }
         if(!$guestHasPermission){
             if(empty(Auth::user())){
                 abort('401');
@@ -117,7 +129,7 @@ class ResourceController extends Controller
                     abort('401');
                 }
             }
-        } 
+        }
         $toValidate = array();
         $form = Form::find( $table );
         $formFields = FormField::where('form_id', '=', $table)->where('add', '=', '1')->get();
@@ -138,19 +150,22 @@ class ResourceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $table
+     * @param int $id
+     * @param Request $request
+     * @return Response | View
      */
     public function show($table, $id, Request $request)
     {
+        $guestHasPermission = false;
         $role = Role::where('name', '=', 'guest')->first();
         try {
             if($role->hasPermissionTo('read bread ' . $table)){
                 $guestHasPermission = true;
             }
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $guestHasPermission = false;
-        }       
+        }
         if(!$guestHasPermission){
             if(empty(Auth::user())){
                 abort('401');
@@ -159,7 +174,7 @@ class ResourceController extends Controller
                     abort('401');
                 }
             }
-        } 
+        }
         $form = Form::find( $table );
         if($form->read == 1){
             $resourceService = new ResourceService();
@@ -175,19 +190,21 @@ class ResourceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $table
+     * @param int $id
+     * @return Response | View
      */
     public function edit($table, $id)
     {
+        $guestHasPermission = false;
         $role = Role::where('name', '=', 'guest')->first();
         try {
             if($role->hasPermissionTo('edit bread ' . $table)){
                 $guestHasPermission = true;
             }
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $guestHasPermission = false;
-        }       
+        }
         if(!$guestHasPermission){
             if(empty(Auth::user())){
                 abort('401');
@@ -216,20 +233,22 @@ class ResourceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $table
+     * @param int $id
+     * @param Request $request
+     * @return Response | RedirectResponse
      */
     public function update($table, $id, Request $request)
     {
+        $guestHasPermission = false;
         $role = Role::where('name', '=', 'guest')->first();
         try {
             if($role->hasPermissionTo('edit bread ' . $table)){
                 $guestHasPermission = true;
             }
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $guestHasPermission = false;
-        }       
+        }
         if(!$guestHasPermission){
             if(empty(Auth::user())){
                 abort('401');
@@ -259,19 +278,22 @@ class ResourceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $table
+     * @param Request $request
+     * @param int $id
+     * @return Response | RedirectResponse | View
      */
     public function destroy($table, Request $request, $id)
     {
+        $guestHasPermission = false;
         $role = Role::where('name', '=', 'guest')->first();
         try {
             if($role->hasPermissionTo('delete bread ' . $table)){
                 $guestHasPermission = true;
             }
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $guestHasPermission = false;
-        }       
+        }
         if(!$guestHasPermission){
             if(empty(Auth::user())){
                 abort('401');

@@ -23,7 +23,7 @@
                 @endif
                 @if( $enableButtons['add'] == 1 )
                     <div class="col-12">
-                        <a 
+                        <a
                             href="{{ route('resource.create', $form->id ) }}"
                             class="btn btn-primary mb-3"
                         >
@@ -33,7 +33,7 @@
                 @endif
                 <div class="row">
                     <div class="col-12">
-                        <table class="table table-responsive-sm table-striped">
+                        <table class="table table-responsive table-striped">
                             <thead>
                                 <tr>
                                     @foreach($header as $head)

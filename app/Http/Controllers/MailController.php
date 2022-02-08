@@ -130,4 +130,9 @@ class MailController extends Controller
         $request->session()->flash('message', 'Successfully sended Email');
         return redirect()->route('mail.index');
     }
+
+    public function showTemplate($id) {
+        $template = EmailTemplate::find($id);
+        return $template->content;
+    }
 }

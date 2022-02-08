@@ -19,7 +19,8 @@
                             </svg>
                           </span>
                         </div>
-                        <input class="form-control" type="text" placeholder="{{ __('Name') }}" name="name" value="{{ old('name') }}" required autofocus>
+                        <input class="form-control" type="text" placeholder="{{ __('Name') }}" name="name"
+                               value="{{ old('name') }}" required autofocus>
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -29,7 +30,8 @@
                             </svg>
                           </span>
                         </div>
-                        <input class="form-control" type="text" placeholder="{{ __('E-Mail Address') }}" name="email" value="{{ old('email') }}" required>
+                        <input class="form-control" type="email" placeholder="{{ __('E-Mail Address') }}" name="email"
+                               value="{{ old('email') }}" required>
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -39,7 +41,8 @@
                             </svg>
                           </span>
                         </div>
-                        <input class="form-control" type="password" placeholder="{{ __('Password') }}" name="password" required>
+                        <input class="form-control" type="password" placeholder="{{ __('Password') }}" min="5"
+                               name="password" required>
                     </div>
                     <div class="input-group mb-4">
                         <div class="input-group-prepend">
