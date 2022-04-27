@@ -53,17 +53,17 @@ class EventVisitController extends Controller {
         } elseif ($request->query('offline_only')) {
             $visits->where('code', '=', 'OFFLINE');
         }
-//        if ($request->query('start_time_gte_')) {
-        $date = $request->query('start_time_gte_');
-        $visits->whereHas('eventSchedule', function ($query) use ($date) {
-            try {
-                $date = Carbon::parse($date);
-            } catch (InvalidFormatException $ex) {
-                $date = today();
-            }
-            $query->whereDate('start_time', '>=', $date);
-        });
-//        }
+        if ($request->query('start_time_gte_')) {
+            $date = $request->query('start_time_gte_');
+            $visits->whereHas('eventSchedule', function ($query) use ($date) {
+                try {
+                    $date = Carbon::parse($date);
+                } catch (InvalidFormatException $ex) {
+                    $date = today();
+                }
+                $query->whereDate('start_time', '>=', $date);
+            });
+        }
         if ($filterType = $request->query('filterType')) {
             $filterVal = $request->query('filterVal');
             logger($filterVal);

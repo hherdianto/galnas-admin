@@ -66,4 +66,14 @@ class EventScheduleController extends Controller {
             ->update(['is_active' => $toggle, 'updated_by' => auth()->id()]);
         return response()->json(['success' => true, 'message' => !$toggle && $visit > 0 ? "Terdapat $visit visit yg terdaftar pada tgl $request->date" : '']);
     }
+
+    public function delete(Request $request, $id) {
+        try {
+            EventSchedule::findOrFail($id)->delete();
+            return response()->json(['status' => 'success']);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            return response()->json(['status' => 'failed', 'messages' => $e->getMessage()]);
+        }
+    }
 }

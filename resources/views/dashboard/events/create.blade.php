@@ -349,7 +349,7 @@
 
 @section('javascript')
     <script src="{{ asset('vendors/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="//unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript">
         let timeSlotTable,
             dows = [
@@ -499,9 +499,41 @@
             $('#schedule_name').data('id', null)
         }
 
-        function deleteRow(row) {
-            timeSlotTable.row(row).remove()
-            timeSlotTable.draw(false)
+        function deleteRow(row, id, schedule_name, start_time, end_time) {
+            swal({
+                title: 'Konfirmasi',
+                text: `Hapus slot ${schedule_name} ${moment(start_time).format('HH:mm')} - ${moment(end_time).format('HH:mm')}?`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((confirm) => {
+                    if (confirm) {
+                        $.post({
+                            url: `{{ url('schedules') }}/${id}`,
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                _method: 'DELETE',
+                            }
+                        })
+                            .done(({status}) => {
+                                console.log(status)
+                                if (status === 'success') {
+                                    timeSlotTable.row(row).remove()
+                                    timeSlotTable.draw(false)
+                                    swal(`Slot ${schedule_name} ${moment(start_time).format('HH:mm')} - ${moment(end_time).format('HH:mm')}
+                                    berhasil di Hapus. `, {
+                                        icon: "success",
+                                    })
+                                }
+                            })
+                            .fail(function (data) {
+                                console.log('fail')
+                                alert(data)
+                                console.log(data)
+                            })
+                    }
+                })
         }
 
         function saveTemplate(id = null) {
@@ -681,7 +713,7 @@
                         data: null,
                         render: (data, type, full, meta) => {
                             return `<button class="btn btn-sm btn-primary" onclick="edit(${meta.row}, ${data.id})"><i class="cil-pencil"></i></button>`
-                                + `<button class="btn btn-sm btn-danger" onclick="deleteRow(${meta.row})"><i class="cil-trash"></i></button>`
+                                + `<button class="btn btn-sm btn-danger" onclick="deleteRow(${meta.row}, ${data.id}, '${data.schedule_name}', '${data.start_time}', '${data.end_time}')"><i class="cil-trash"></i></button>`
                         },
                         orderable: false,
                     },

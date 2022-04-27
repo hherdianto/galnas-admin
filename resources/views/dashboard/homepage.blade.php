@@ -399,7 +399,7 @@
                         visible: false,
                         searchable: false,
                         render: data => {
-                            return data === 1 ? 'L' : 'P'
+                            return (data === '1' ? 'L' : 'P')
                         }
                     },
                     {
@@ -414,13 +414,13 @@
                             return data === '1' ? 'WNI' : 'WNA'
                         }
                     },
-                    {data: 'event_schedule.event.event_name', name: 'event_schedule.event.event_name'},
+                    {data: 'event_schedule.event.event_name', name: 'eventSchedule.event.event_name'},
                     {
-                        data: null,
-                        name: 'event_schedule.start_time',
+                        data: 'event_schedule',
+                        name: 'eventSchedule.start_time',
                         render: data => {
-                            return `${moment(data.event_schedule.start_time).format('YYYY-MM-DD HH:mm')
-                            + ' - ' + moment(data.event_schedule.end_time).format('HH:mm')}`
+                            return `${moment(data.start_time).format('YYYY-MM-DD HH:mm')
+                            + ' - ' + moment(data.end_time).format('HH:mm')}`
                         }
                     },
                     {data: 'member_count', name: 'member_count'},

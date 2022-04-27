@@ -156,7 +156,7 @@
                         visible: false,
                         searchable: false,
                         render: data => {
-                            return data === 1 ? 'L' : 'P'
+                            return data === '1' ? 'L' : 'P'
                         }
                     },
                     {
